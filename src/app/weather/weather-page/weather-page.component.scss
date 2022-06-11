@@ -1,0 +1,62 @@
+.current-weather-container {
+  background-color: #1e213a;
+  height: 100vh;
+}
+
+.forecast-container {
+  background-color: #100d1d;
+  padding: 3em 5%;
+
+  .metric-type-container {
+    text-align: right;
+  }
+
+  .icon {
+    height: 3em;
+    width: 3em;
+    border-radius: 50%;
+    background-color: #595577;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+
+    &.active {
+      background-color: #fff;
+      color: #100d1d;
+    }
+
+    & + .icon {
+      margin-left: 5px;
+    }
+  }
+
+  app-weather-daily-card,
+  app-weather-highlight-card {
+    margin-bottom: 1em;
+
+    &:last-child {
+      margin-bottom: 0;
+      align-self: flex-start;
+    }
+
+    div {
+      margin: 1em 0;
+    }
+  }
+
+  app-weather-highlight-card .humidity-bar-container {
+    width: 80%;
+    margin: 1em auto;
+
+
+
+    .humidity-bar {
+      width: 100%;
+    }
+
+    .humidity-bar-info {
+      display: block;
+      text-align: right;
+    }
+  }
+}

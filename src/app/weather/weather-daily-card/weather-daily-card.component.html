@@ -1,0 +1,22 @@
+<p class="weather-date">{{ dailyData.date }}</p>
+<img
+  [src]="
+    'http://openweathermap.org/img/wn/' + dailyData.weather.icon + '@2x.png'
+  "
+  [alt]="dailyData.weather.type"
+  [title]="dailyData.weather.type"
+/>
+<p
+  class="weather-description mb-1"
+  title="{{ dailyData.weather.description | titlecase }}"
+>
+  {{ dailyData.weather.description | titlecase }}
+</p>
+<div
+  fxLayout="row"
+  fxLayoutAlign="space-between center"
+  class="max-min-temp-container"
+>
+  <span>{{ dailyData.temp.max }}&deg;C</span>
+  <span>{{ dailyData.temp.min }}&deg;C</span>
+</div>

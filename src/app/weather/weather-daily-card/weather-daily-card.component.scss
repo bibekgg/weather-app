@@ -1,0 +1,16 @@
+:host {
+  background-color: #1e213a;
+  text-align: center;
+  padding: 1em;
+}
+
+.weather-date,
+.max-min-temp-container {
+  color: gray;
+}
+
+.weather-description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

@@ -1,0 +1,42 @@
+<div
+  fxLayout="column"
+  fxLayoutAlign="space-between stretch"
+  class="weather-current-page"
+  fxLayoutGap="2em"
+>
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <button class="search-button">Search for Places</button>
+    <button class="btn-icon">
+      <span class="material-icons">my_location</span>
+    </button>
+  </div>
+  <div class="img-container" ngClass.gt-xs="img-container-large">
+    <img
+      [src]="
+        'http://openweathermap.org/img/wn/' +
+        currentWeatherData.weather.icon +
+        '@4x.png'
+      "
+      [alt]="currentWeatherData.weather.type"
+      [title]="currentWeatherData.weather.type"
+    />
+  </div>
+  <p class="current-temp-container">
+    <span class="current-temp">{{ currentWeatherData.temp.value }}</span
+    >&deg;
+    <span class="current-temp-unit">{{ currentWeatherData.temp.unit }}</span>
+  </p>
+  <p
+    class="weather-description mb-1"
+    title="{{ currentWeatherData.weather.description | titlecase }}"
+  >
+    {{ currentWeatherData.weather.description | titlecase }}
+  </p>
+  <div class="weather-info">
+    <p class="mb-1">Today &middot; {{ currentWeatherData.date }}</p>
+    <p fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px">
+      <span class="material-icons">pin_drop</span>
+      <span>{{ currentWeatherData.location }}</span>
+    </p>
+  </div>
+</div>

@@ -1,12 +1,9 @@
-export interface WeatherDaily {
-  date: string;
-  weather: {
-    type: string;
-    description: string;
-    icon: string;
-  }
+import { WeatherInfo } from "./weather-current";
+
+export interface WeatherDaily extends WeatherInfo {
   temp: {
     min: number;
     max: number;
+    unit: string;
   }
 }

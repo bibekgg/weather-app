@@ -1,0 +1,53 @@
+.btn-icon {
+  background-color: #6c6f79;
+}
+
+.weather-current-page {
+  text-align: center;
+  height: 100%;
+
+  .search-button {
+    cursor: pointer;
+    outline: none;
+    border: none;
+    display: inline-block;
+    vertical-align: baseline;
+    text-align: center;
+    padding: 12px 1em;
+    border-radius: 4px;
+    box-shadow: 0 3px 1px -2px #0003, 0 2px 2px #00000024, 0 1px 5px #0000001f;
+    background-color: #6d707a;
+    color: white;
+  }
+
+  .img-container {
+    height: 250px;
+
+    img {
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  .img-container-large {
+    height: 300px;
+  }
+
+  .current-temp-container {
+    .current-temp {
+      font-size: 6em;
+    }
+    .current-temp-unit {
+      font-size: 2em;
+    }
+  }
+
+  .weather-description {
+    font-size: 1.5em;
+    color: #b9b9c5;
+  }
+
+  .weather-info {
+    color: #8f8ea2;
+  }
+}

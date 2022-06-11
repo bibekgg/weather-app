@@ -31,12 +31,12 @@ export class WeatherPageComponent implements OnInit {
     {
       date: 'Tomorrow',
       weather: { type: 'Sunny', description: 'thunderstorm', icon: '10d' },
-      temp: { min: 11, max: 16 },
+      temp: { min: 11, max: 16, unit: 'C' },
     },
     {
       date: 'Sun, 7 Jun',
       weather: { type: 'Sunny', description: 'scattered clouds', icon: '10d' },
-      temp: { min: 11, max: 16 },
+      temp: { min: 11, max: 16, unit: 'C' },
     },
     {
       date: 'Sun, 7 Jun',
@@ -45,17 +45,17 @@ export class WeatherPageComponent implements OnInit {
         description: 'scattered thunderstorm clouds',
         icon: '04n',
       },
-      temp: { min: 11, max: 16 },
+      temp: { min: 11, max: 16, unit: 'C' },
     },
     {
       date: 'Sun, 7 Jun',
       weather: { type: 'Sunny', description: 'clear sky	', icon: '11d' },
-      temp: { min: 11, max: 16 },
+      temp: { min: 11, max: 16, unit: 'C' },
     },
     {
       date: 'Sun, 7 Jun',
       weather: { type: 'Sunny', description: 'snow', icon: '01d' },
-      temp: { min: 11, max: 16 },
+      temp: { min: 11, max: 16, unit: 'C' },
     },
   ];
 

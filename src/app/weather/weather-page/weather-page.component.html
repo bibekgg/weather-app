@@ -1,5 +1,7 @@
 <div fxLayout="column" fxLayout.gt-xs="row">
-  <div class="current-weather-container" fxFlex="25">current</div>
+  <div class="current-weather-container" fxFlex="25" ngClass.gt-xs="full-height">
+    <app-weather-current></app-weather-current>
+  </div>
   <div
     class="forecast-container"
     fxLayout="column"
@@ -8,14 +10,14 @@
   >
     <div class="metric-type-container">
       <button
-        class="icon"
+        class="btn-icon"
         [ngClass]="{ active: unitType === 'metric' }"
         (click)="changeUnitType('metric')"
       >
         <span>&deg;C</span>
       </button>
       <button
-        class="icon"
+        class="btn-icon"
         [ngClass]="{ active: unitType === 'imperial' }"
         (click)="changeUnitType('imperial')"
       >
@@ -36,18 +38,23 @@
         *ngFor="let highlight of highlightData"
         [highlightData]="highlight"
         fxFlex="100"
-        fxFlex.gt-xs="0 1 calc(50% - 1em)"
+        fxFlex.gt-xs="0 1 calc(50% - 1em)" fxLayout="column" fxLayoutAlign="space-between stretch"
       >
         <ng-container *ngIf="highlight.extraData as extra">
           <ng-container [ngSwitch]="extra.type">
-            <div *ngSwitchCase="'wind'">
+            <div
+              *ngSwitchCase="'wind'"
+              fxLayout="row"
+              fxLayoutAlign="center center"
+              fxLayoutGap="5px"
+            >
               <span
                 class="material-icons"
                 [ngStyle]="{ transform: 'rotate(' + extra.value + 'deg)' }"
               >
                 assistant_navigation
               </span>
-              {{ getDirection(extra.value) }}
+              <span>{{ getDirection(extra.value) }}</span>
             </div>
             <div *ngSwitchCase="'progress'" class="humidity-bar-container">
               <span fxLayout="row" fxLayoutAlign="space-between center">
@@ -55,7 +62,11 @@
                 <span>50</span>
                 <span>100</span>
               </span>
-              <progress class="humidity-bar" [value]="extra.value" max="100"></progress>
+              <progress
+                class="humidity-bar"
+                [value]="extra.value"
+                max="100"
+              ></progress>
               <span class="humidity-bar-info">%</span>
             </div>
           </ng-container>

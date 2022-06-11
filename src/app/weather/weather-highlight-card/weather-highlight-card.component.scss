@@ -1,12 +1,15 @@
 :host {
   background-color: #1e213a;
   text-align: center;
-  padding: 0 1em;
+  padding: 1em;
 }
 
 p {
   margin: 1em 0;
   strong {
+    font-size: 3.5em;
+  }
+  span {
     font-size: 2em;
   }
 }

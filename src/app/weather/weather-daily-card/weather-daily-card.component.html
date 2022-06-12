@@ -1,15 +1,15 @@
-<p class="weather-date">{{ dailyData.Date | date: "EEE, d LLL" }}</p>
+<p class="weather-date">{{ dailyData?.Date | date: "EEE, d LLL" }}</p>
 <img
   [src]="
     'https://developer.accuweather.com/sites/default/files/' +
-    (dailyData.Day.Icon < 10 ? '0' + dailyData.Day.Icon : dailyData.Day.Icon) +
+    (dailyData.Day.Icon < 10 ? '0' + dailyData?.Day?.Icon : dailyData?.Day?.Icon) +
     '-s.png'
   "
-  [alt]="dailyData.Day.IconPhrase"
-  [title]="dailyData.Day.IconPhrase"
+  [alt]="dailyData?.Day?.IconPhrase"
+  [title]="dailyData?.Day?.IconPhrase"
 />
-<p class="weather-description mb-1" title="{{ dailyData.Day.IconPhrase }}">
-  {{ dailyData.Day.IconPhrase }}
+<p class="weather-description mb-1" title="{{ dailyData?.Day?.IconPhrase }}">
+  {{ dailyData?.Day?.IconPhrase }}
 </p>
 <div
   fxLayout="row"
@@ -17,13 +17,13 @@
   class="max-min-temp-container"
 >
   <span
-    >{{ dailyData.Temperature.Maximum.Value }}&deg;{{
-      dailyData.Temperature.Maximum.Unit
+    >{{ dailyData?.Temperature?.Maximum?.Value }}&deg;{{
+      dailyData?.Temperature?.Maximum?.Unit
     }}</span
   >
   <span
-    >{{ dailyData.Temperature.Minimum.Value }}&deg;{{
-      dailyData.Temperature.Minimum.Unit
+    >{{ dailyData?.Temperature?.Minimum?.Value }}&deg;{{
+      dailyData?.Temperature?.Minimum?.Unit
     }}</span
   >
 </div>

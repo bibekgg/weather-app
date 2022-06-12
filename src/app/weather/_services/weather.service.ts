@@ -45,7 +45,7 @@ export class WeatherService {
           ).subscribe();
         },
         () => {
-          alert('You need to allow to get current location.');
+          alert('You need to allow to get current location else use search box to search for places');
         },
         { timeout: 10000 }
       );

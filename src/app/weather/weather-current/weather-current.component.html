@@ -5,42 +5,44 @@
   fxLayoutGap="2em"
 >
   <app-weather-search></app-weather-search>
-  <div class="img-container" ngClass.gt-xs="img-container-large">
-    <img
-      [src]="
-        'https://developer.accuweather.com/sites/default/files/' +
-        (currentWeatherData.WeatherIcon < 10
-          ? '0' + currentWeatherData.WeatherIcon
-          : currentWeatherData.WeatherIcon) +
-        '-s.png'
-      "
-      [alt]="currentWeatherData.WeatherText"
-      [title]="currentWeatherData.WeatherText"
-    />
-  </div>
-  <p class="current-temp-container">
-    <span class="current-temp">{{
-      currentWeatherData.Temperature[unitType].Value
-    }}</span
-    >&deg;
-    <span class="current-temp-unit">{{
-      currentWeatherData.Temperature[unitType].Unit
-    }}</span>
-  </p>
-  <p
-    class="weather-description mb-1"
-    title="{{ currentWeatherData.WeatherText | titlecase }}"
-  >
-    {{ currentWeatherData.WeatherText | titlecase }}
-  </p>
-  <div class="weather-info">
-    <p class="mb-1">
-      Today &middot;
-      {{ currentWeatherData.LocalObservationDateTime | date: "EEE, d LLL" }}
+  <ng-container *ngIf="currentWeatherData">
+    <div class="img-container" ngClass.gt-xs="img-container-large">
+      <img
+        [src]="
+          'https://developer.accuweather.com/sites/default/files/' +
+          (currentWeatherData.WeatherIcon < 10
+            ? '0' + currentWeatherData.WeatherIcon
+            : currentWeatherData.WeatherIcon) +
+          '-s.png'
+        "
+        [alt]="currentWeatherData.WeatherText"
+        [title]="currentWeatherData.WeatherText"
+      />
+    </div>
+    <p class="current-temp-container">
+      <span class="current-temp">{{
+        currentWeatherData.Temperature[unitType].Value
+      }}</span
+      >&deg;
+      <span class="current-temp-unit">{{
+        currentWeatherData.Temperature[unitType].Unit
+      }}</span>
     </p>
-    <p fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px">
-      <span class="material-icons">pin_drop</span>
-      <span>{{ currentWeatherData.Location }}</span>
+    <p
+      class="weather-description mb-1"
+      title="{{ currentWeatherData.WeatherText | titlecase }}"
+    >
+      {{ currentWeatherData.WeatherText | titlecase }}
     </p>
-  </div>
+    <div class="weather-info">
+      <p class="mb-1">
+        Today &middot;
+        {{ currentWeatherData.LocalObservationDateTime | date: "EEE, d LLL" }}
+      </p>
+      <p fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px">
+        <span class="material-icons">pin_drop</span>
+        <span>{{ currentWeatherData.Location }}</span>
+      </p>
+    </div>
+  </ng-container>
 </div>

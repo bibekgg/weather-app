@@ -27,7 +27,6 @@ export class WeatherPageComponent implements OnInit {
   ngOnInit(): void {
     this.weatherService.getCurrentGeoLocation();
     this.weatherService.weatherData.pipe(skip(1)).subscribe((data) => {
-      console.log('dataaaaaaaaaaaaaaaa');
       this.loading = false;
       this.dailyWeatherData = data.daily;
       this.currentWeatherData = data.current;

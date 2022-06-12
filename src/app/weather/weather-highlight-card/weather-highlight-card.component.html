@@ -1,6 +1,8 @@
-<p>{{ highlightData.title }}</p>
-<p>
-  <strong>{{ highlightData.data[unitType].Value }}</strong>
-  <span>{{ highlightData.data[unitType].Unit }}</span>
-</p>
+<ng-container *ngIf="highlightData">
+  <p>{{ highlightData.title }}</p>
+  <p>
+    <strong>{{ highlightData.data[unitType].Value }}</strong>
+    <span>{{ highlightData.data[unitType].Unit }}</span>
+  </p>
+</ng-container>
 <ng-content></ng-content>

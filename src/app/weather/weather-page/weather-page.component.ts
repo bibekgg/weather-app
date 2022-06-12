@@ -26,31 +26,33 @@ export class WeatherPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.weatherService.getCurrentGeoLocation();
-    this.weatherService.weatherData.pipe(skip(1)).subscribe((data) => {
-      this.loading = false;
-      this.dailyWeatherData = data.daily;
-      this.currentWeatherData = data.current;
-      this.highlightData = [
-        new WeatherHighlight('Wind status', data.current.Wind.Speed, {
-          type: 'wind',
-          value: data.current.Wind.Direction.Degrees,
-          description: data.current.Wind.Direction.English,
-        }),
-        new WeatherHighlight(
-          'Humidity',
-          {
-            Metric: { Value: data.current.RelativeHumidity, Unit: '%' },
-            Imperial: { Value: data.current.RelativeHumidity, Unit: '%' },
-          },
-          {
-            type: 'humidity',
-            value: data.current.RelativeHumidity,
-          }
-        ),
-        new WeatherHighlight('Visibility', data.current.Visibility),
-        new WeatherHighlight('Air Pressure', data.current.Pressure),
-      ];
-    });
+    this.weatherDataSubscription = this.weatherService.weatherData
+      .pipe(skip(1))
+      .subscribe((data) => {
+        this.loading = false;
+        this.dailyWeatherData = data.daily;
+        this.currentWeatherData = data.current;
+        this.highlightData = [
+          new WeatherHighlight('Wind status', data.current.Wind.Speed, {
+            type: 'wind',
+            value: data.current.Wind.Direction.Degrees,
+            description: data.current.Wind.Direction.English,
+          }),
+          new WeatherHighlight(
+            'Humidity',
+            {
+              Metric: { Value: data.current.RelativeHumidity, Unit: '%' },
+              Imperial: { Value: data.current.RelativeHumidity, Unit: '%' },
+            },
+            {
+              type: 'humidity',
+              value: data.current.RelativeHumidity,
+            }
+          ),
+          new WeatherHighlight('Visibility', data.current.Visibility),
+          new WeatherHighlight('Air Pressure', data.current.Pressure),
+        ];
+      });
   }
 
   changeUnitType(unitType: 'Metric' | 'Imperial') {

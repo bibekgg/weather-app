@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { WeatherDaily } from 'src/app/_models';
+import { DailyForecast } from 'src/app/_models';
 
 @Component({
   selector: 'app-weather-daily-card',
@@ -7,7 +7,7 @@ import { WeatherDaily } from 'src/app/_models';
   styleUrls: ['./weather-daily-card.component.scss']
 })
 export class WeatherDailyCardComponent implements OnInit {
-  @Input('dailyData') dailyData!: WeatherDaily;
+  @Input('dailyData') dailyData!: DailyForecast;
 
   constructor() { }
 

@@ -1,6 +1,14 @@
 <div fxLayout="column" fxLayout.gt-xs="row">
-  <div class="current-weather-container" fxFlex="25" ngClass.gt-xs="full-height">
-    <app-weather-current></app-weather-current>
+  <div
+    class="current-weather-container"
+    fxFlex="25"
+    ngClass.gt-xs="full-height"
+  >
+    <app-weather-current
+      *ngIf="!loading"
+      [currentWeatherData]="currentWeatherData"
+      [unitType]="unitType"
+    ></app-weather-current>
   </div>
   <div
     class="forecast-container"
@@ -8,70 +16,75 @@
     fxFlex="75"
     fxLayoutGap="20px"
   >
-    <div class="metric-type-container">
-      <button
-        class="btn-icon"
-        [ngClass]="{ active: unitType === 'metric' }"
-        (click)="changeUnitType('metric')"
-      >
-        <span>&deg;C</span>
-      </button>
-      <button
-        class="btn-icon"
-        [ngClass]="{ active: unitType === 'imperial' }"
-        (click)="changeUnitType('imperial')"
-      >
-        <span>&deg;F</span>
-      </button>
-    </div>
-    <div fxLayout="row wrap" fxLayoutAlign="space-between start">
-      <app-weather-daily-card
-        *ngFor="let daily of dailyWeatherData"
-        [dailyData]="daily"
-        fxFlex="0 0 calc(50% - 1em)"
-        fxFlex.gt-xs="0 0 calc(20% - 1em)"
-      ></app-weather-daily-card>
-    </div>
-    <h4>Today's Highlights</h4>
-    <div fxLayout="row wrap" fxLayoutAlign="space-between stretch">
-      <app-weather-highlight-card
-        *ngFor="let highlight of highlightData"
-        [highlightData]="highlight"
-        fxFlex="100"
-        fxFlex.gt-xs="0 1 calc(50% - 1em)" fxLayout="column" fxLayoutAlign="space-between stretch"
-      >
-        <ng-container *ngIf="highlight.extraData as extra">
-          <ng-container [ngSwitch]="extra.type">
-            <div
-              *ngSwitchCase="'wind'"
-              fxLayout="row"
-              fxLayoutAlign="center center"
-              fxLayoutGap="5px"
-            >
-              <span
-                class="material-icons"
-                [ngStyle]="{ transform: 'rotate(' + extra.value + 'deg)' }"
+    <ng-container *ngIf="!loading">
+      <div class="metric-type-container">
+        <button
+          class="btn-icon"
+          [ngClass]="{ active: unitType === 'Metric' }"
+          (click)="changeUnitType('Metric')"
+        >
+          <span>&deg;C</span>
+        </button>
+        <button
+          class="btn-icon"
+          [ngClass]="{ active: unitType === 'Imperial' }"
+          (click)="changeUnitType('Imperial')"
+        >
+          <span>&deg;F</span>
+        </button>
+      </div>
+      <div fxLayout="row wrap" fxLayoutAlign="space-between start">
+        <app-weather-daily-card
+          *ngFor="let daily of dailyWeatherData"
+          [dailyData]="daily"
+          fxFlex="0 0 calc(50% - 1em)"
+          fxFlex.gt-xs="0 0 calc(20% - 1em)"
+        ></app-weather-daily-card>
+      </div>
+      <h4>Today's Highlights</h4>
+      <div fxLayout="row wrap" fxLayoutAlign="space-between stretch">
+        <app-weather-highlight-card
+          *ngFor="let highlight of highlightData"
+          [highlightData]="highlight"
+          [unitType]="unitType"
+          fxFlex="100"
+          fxFlex.gt-xs="0 1 calc(50% - 1em)"
+          fxLayout="column"
+          fxLayoutAlign="space-between stretch"
+        >
+          <ng-container *ngIf="highlight.extraData as extra">
+            <ng-container [ngSwitch]="extra.type">
+              <div
+                *ngSwitchCase="'wind'"
+                fxLayout="row"
+                fxLayoutAlign="center center"
+                fxLayoutGap="5px"
               >
-                assistant_navigation
-              </span>
-              <span>{{ getDirection(extra.value) }}</span>
-            </div>
-            <div *ngSwitchCase="'progress'" class="humidity-bar-container">
-              <span fxLayout="row" fxLayoutAlign="space-between center">
-                <span>0</span>
-                <span>50</span>
-                <span>100</span>
-              </span>
-              <progress
-                class="humidity-bar"
-                [value]="extra.value"
-                max="100"
-              ></progress>
-              <span class="humidity-bar-info">%</span>
-            </div>
+                <span
+                  class="material-icons"
+                  [ngStyle]="{ transform: 'rotate(' + extra.value + 'deg)' }"
+                >
+                  assistant_navigation
+                </span>
+                <span>{{ extra.description }}</span>
+              </div>
+              <div *ngSwitchCase="'humidity'" class="humidity-bar-container">
+                <span fxLayout="row" fxLayoutAlign="space-between center">
+                  <span>0</span>
+                  <span>50</span>
+                  <span>100</span>
+                </span>
+                <progress
+                  class="humidity-bar"
+                  [value]="extra.value"
+                  max="100"
+                ></progress>
+                <span class="humidity-bar-info">%</span>
+              </div>
+            </ng-container>
           </ng-container>
-        </ng-container>
-      </app-weather-highlight-card>
-    </div>
+        </app-weather-highlight-card>
+      </div>
+    </ng-container>
   </div>
 </div>

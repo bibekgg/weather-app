@@ -1,6 +1,6 @@
 <p>{{ highlightData.title }}</p>
 <p>
-  <strong>{{ highlightData.value }}</strong>
-  <span>{{ highlightData.unit }}</span>
+  <strong>{{ highlightData.data[unitType].Value }}</strong>
+  <span>{{ highlightData.data[unitType].Unit }}</span>
 </p>
 <ng-content></ng-content>

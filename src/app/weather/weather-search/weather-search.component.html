@@ -1,0 +1,35 @@
+<div
+  fxLayout="row"
+  fxLayoutAlign="space-between center"
+  *ngIf="!isEditMode; else editMode"
+>
+  <button class="search-button" (click)="isEditMode = true">
+    Search for Places
+  </button>
+  <button class="btn-icon" (click)="getCurrentGeoLocation()">
+    <span class="material-icons">my_location</span>
+  </button>
+</div>
+<ng-template #editMode>
+  <div
+    fxLayout="row"
+    fxLayoutAlign="space-between center"
+    fxLayoutGap="5px"
+    class="search-container"
+  >
+    <input
+      type="text"
+      placeholder="Enter City Name"
+      [formControl]="search"
+      (focus)="showSuggestion = true"
+    />
+    <button class="search-button">Search</button>
+    <div class="suggestion-container" *ngIf="showSuggestion && list?.length">
+      <ul>
+        <li *ngFor="let item of list" (click)="selected(item)">
+          {{ item.LocalizedName + ", " + item.Country.LocalizedName }}
+        </li>
+      </ul>
+    </div>
+  </div>
+</ng-template>

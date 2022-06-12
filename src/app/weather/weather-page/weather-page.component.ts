@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { WeatherDaily, WeatherHighlight } from 'src/app/_models';
-import { WeatherHelperService } from '../_services/weather.helper.service';
+import { skip } from 'rxjs';
+import {
+  CurrentResponse,
+  DailyForecast,
+  WeatherHighlight,
+} from 'src/app/_models';
+import { WeatherService } from '../_services/weather.service';
 
 @Component({
   selector: 'app-weather-page',
@@ -8,68 +13,52 @@ import { WeatherHelperService } from '../_services/weather.helper.service';
   styleUrls: ['./weather-page.component.scss'],
 })
 export class WeatherPageComponent implements OnInit {
-  unitType: 'metric' | 'imperial' = 'metric';
+  unitType: 'Metric' | 'Imperial' = 'Metric';
 
-  highlightData: WeatherHighlight[] = [
-    {
-      title: 'Wind status',
-      value: 7,
-      unit: 'mph',
-      extraData: { type: 'wind', value: 300 },
-    },
-    {
-      title: 'Humidity',
-      value: 84,
-      unit: '%',
-      extraData: { type: 'progress', value: 84 },
-    },
-    { title: 'Visibility', value: 6.4, unit: 'miles' },
-    { title: 'Air Pressure', value: 998, unit: 'mb' },
-  ];
+  highlightData: WeatherHighlight[] = [];
 
-  dailyWeatherData: WeatherDaily[] = [
-    {
-      date: 'Tomorrow',
-      weather: { type: 'Sunny', description: 'thunderstorm', icon: '10d' },
-      temp: { min: 11, max: 16, unit: 'C' },
-    },
-    {
-      date: 'Sun, 7 Jun',
-      weather: { type: 'Sunny', description: 'scattered clouds', icon: '10d' },
-      temp: { min: 11, max: 16, unit: 'C' },
-    },
-    {
-      date: 'Sun, 7 Jun',
-      weather: {
-        type: 'Sunny',
-        description: 'scattered thunderstorm clouds',
-        icon: '04n',
-      },
-      temp: { min: 11, max: 16, unit: 'C' },
-    },
-    {
-      date: 'Sun, 7 Jun',
-      weather: { type: 'Sunny', description: 'clear sky	', icon: '11d' },
-      temp: { min: 11, max: 16, unit: 'C' },
-    },
-    {
-      date: 'Sun, 7 Jun',
-      weather: { type: 'Sunny', description: 'snow', icon: '01d' },
-      temp: { min: 11, max: 16, unit: 'C' },
-    },
-  ];
+  dailyWeatherData: DailyForecast[] = [];
+  currentWeatherData!: CurrentResponse;
 
-  constructor() {}
+  loading = true;
 
-  ngOnInit(): void {}
+  constructor(private weatherService: WeatherService) {}
 
-  changeUnitType(unitType: 'metric' | 'imperial') {
-    if (unitType !== this.unitType) {
-      this.unitType = unitType;
-    }
+  ngOnInit(): void {
+    this.weatherService.getCurrentGeoLocation();
+    this.weatherService.weatherData.pipe(skip(1)).subscribe((data) => {
+      console.log('dataaaaaaaaaaaaaaaa');
+      this.loading = false;
+      this.dailyWeatherData = data.daily;
+      this.currentWeatherData = data.current;
+      this.highlightData = [
+        new WeatherHighlight('Wind status', data.current.Wind.Speed, {
+          type: 'wind',
+          value: data.current.Wind.Direction.Degrees,
+          description: data.current.Wind.Direction.English,
+        }),
+        new WeatherHighlight(
+          'Humidity',
+          {
+            Metric: { Value: data.current.RelativeHumidity, Unit: '%' },
+            Imperial: { Value: data.current.RelativeHumidity, Unit: '%' },
+          },
+          {
+            type: 'humidity',
+            value: data.current.RelativeHumidity,
+          }
+        ),
+        new WeatherHighlight('Visibility', data.current.Visibility),
+        new WeatherHighlight('Air Pressure', data.current.Pressure),
+      ];
+    });
   }
 
-  getDirection(degree: number) {
-    return WeatherHelperService.degreeToCompass(degree);
+  changeUnitType(unitType: 'Metric' | 'Imperial') {
+    if (unitType !== this.unitType) {
+      this.loading = true;
+      this.unitType = unitType;
+      this.weatherService.changeUnit(unitType);
+    }
   }
 }

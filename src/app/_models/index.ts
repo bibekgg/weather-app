@@ -1,3 +1,10 @@
-export { WeatherInfo, WeatherCurrent } from './weather-current';
 export { WeatherHighlight } from './weather-highlight';
-export { WeatherDaily } from './weather-daily';
+export { CitySuggestion } from './city-suggestion';
+export { GeoPostionResponse } from './geo-position-response';
+export {
+  CurrentResponse,
+  DailyForecast,
+  WeatherResponse,
+  WeatherUnit,
+  DailyResponse
+} from './weather-response';

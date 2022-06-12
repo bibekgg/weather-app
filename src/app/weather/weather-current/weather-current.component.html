@@ -4,39 +4,43 @@
   class="weather-current-page"
   fxLayoutGap="2em"
 >
-  <div fxLayout="row" fxLayoutAlign="space-between center">
-    <button class="search-button">Search for Places</button>
-    <button class="btn-icon">
-      <span class="material-icons">my_location</span>
-    </button>
-  </div>
+  <app-weather-search></app-weather-search>
   <div class="img-container" ngClass.gt-xs="img-container-large">
     <img
       [src]="
-        'http://openweathermap.org/img/wn/' +
-        currentWeatherData.weather.icon +
-        '@4x.png'
+        'https://developer.accuweather.com/sites/default/files/' +
+        (currentWeatherData.WeatherIcon < 10
+          ? '0' + currentWeatherData.WeatherIcon
+          : currentWeatherData.WeatherIcon) +
+        '-s.png'
       "
-      [alt]="currentWeatherData.weather.type"
-      [title]="currentWeatherData.weather.type"
+      [alt]="currentWeatherData.WeatherText"
+      [title]="currentWeatherData.WeatherText"
     />
   </div>
   <p class="current-temp-container">
-    <span class="current-temp">{{ currentWeatherData.temp.value }}</span
+    <span class="current-temp">{{
+      currentWeatherData.Temperature[unitType].Value
+    }}</span
     >&deg;
-    <span class="current-temp-unit">{{ currentWeatherData.temp.unit }}</span>
+    <span class="current-temp-unit">{{
+      currentWeatherData.Temperature[unitType].Unit
+    }}</span>
   </p>
   <p
     class="weather-description mb-1"
-    title="{{ currentWeatherData.weather.description | titlecase }}"
+    title="{{ currentWeatherData.WeatherText | titlecase }}"
   >
-    {{ currentWeatherData.weather.description | titlecase }}
+    {{ currentWeatherData.WeatherText | titlecase }}
   </p>
   <div class="weather-info">
-    <p class="mb-1">Today &middot; {{ currentWeatherData.date }}</p>
+    <p class="mb-1">
+      Today &middot;
+      {{ currentWeatherData.LocalObservationDateTime | date: "EEE, d LLL" }}
+    </p>
     <p fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px">
       <span class="material-icons">pin_drop</span>
-      <span>{{ currentWeatherData.location }}</span>
+      <span>{{ currentWeatherData.Location }}</span>
     </p>
   </div>
 </div>

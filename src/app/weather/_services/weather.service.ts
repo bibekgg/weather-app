@@ -61,8 +61,7 @@ export class WeatherService {
 
   getAutoSuggestData(name: string) {
     const params = new HttpParams()
-      .set('q', name)
-      .set('apikey', environment.weatherAPIKey);
+      .set('q', name);
     return this.httpClient.get<CitySuggestion>(
       environment.weatherAPIBaseURL + 'locations/v1/cities/autocomplete',
       {
@@ -73,8 +72,7 @@ export class WeatherService {
 
   getInfoWithGeoData(lat: number, lon: number) {
     const params = new HttpParams()
-      .set('q', lat + ',' + lon)
-      .set('apikey', environment.weatherAPIKey);
+      .set('q', lat + ',' + lon);
     return this.httpClient
       .get<GeoPostionResponse>(
         environment.weatherAPIBaseURL +
@@ -107,8 +105,7 @@ export class WeatherService {
 
   private getCurrentWeatherData(locationKey: string) {
     const params = new HttpParams()
-      .set('details', true)
-      .set('apikey', environment.weatherAPIKey);
+      .set('details', true);
     return this.httpClient.get<CurrentResponse[]>(
       environment.weatherAPIBaseURL + 'currentconditions/v1/' + locationKey,
       {
@@ -121,8 +118,7 @@ export class WeatherService {
 
   private getForeCastData(locationKey: string) {
     const params = new HttpParams()
-      .set('metric', this.unitTypeSubject.value === 'Metric')
-      .set('apikey', environment.weatherAPIKey);
+      .set('metric', this.unitTypeSubject.value === 'Metric');
     return this.httpClient.get<DailyResponse>(
       environment.weatherAPIBaseURL + 'forecasts/v1/daily/5day/' + locationKey,
       {

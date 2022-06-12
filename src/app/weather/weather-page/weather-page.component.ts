@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { skip } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { skip, Subscription } from 'rxjs';
 import {
   CurrentResponse,
   DailyForecast,
@@ -12,15 +12,15 @@ import { WeatherService } from '../_services/weather.service';
   templateUrl: './weather-page.component.html',
   styleUrls: ['./weather-page.component.scss'],
 })
-export class WeatherPageComponent implements OnInit {
+export class WeatherPageComponent implements OnInit, OnDestroy {
   unitType: 'Metric' | 'Imperial' = 'Metric';
 
   highlightData: WeatherHighlight[] = [];
-
   dailyWeatherData: DailyForecast[] = [];
   currentWeatherData!: CurrentResponse;
-
   loading = true;
+
+  weatherDataSubscription!: Subscription;
 
   constructor(private weatherService: WeatherService) {}
 
@@ -59,5 +59,9 @@ export class WeatherPageComponent implements OnInit {
       this.unitType = unitType;
       this.weatherService.changeUnit(unitType);
     }
+  }
+
+  ngOnDestroy(): void {
+    this.weatherDataSubscription.unsubscribe();
   }
 }

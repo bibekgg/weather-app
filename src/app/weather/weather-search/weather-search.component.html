@@ -23,7 +23,7 @@
       [formControl]="search"
       (focus)="showSuggestion = true"
     />
-    <button class="search-button">Search</button>
+    <button class="search-button" (click)="clear()">Cancel</button>
     <div class="suggestion-container" *ngIf="showSuggestion && list?.length">
       <ul>
         <li *ngFor="let item of list" (click)="selected(item)">

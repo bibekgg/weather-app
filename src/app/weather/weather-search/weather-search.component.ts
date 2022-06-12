@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, of, switchMap } from 'rxjs';
+import { debounceTime, distinctUntilChanged, of, Subscription, switchMap } from 'rxjs';
 import { CitySuggestion } from 'src/app/_models';
 import { WeatherService } from '../_services/weather.service';
 
@@ -9,16 +9,17 @@ import { WeatherService } from '../_services/weather.service';
   templateUrl: './weather-search.component.html',
   styleUrls: ['./weather-search.component.scss'],
 })
-export class WeatherSearchComponent implements OnInit {
+export class WeatherSearchComponent implements OnInit, OnDestroy {
   isEditMode: boolean = false;
   list: CitySuggestion[] = [];
   search = new FormControl('');
   showSuggestion: boolean = false;
+  searchSubscription!: Subscription;
 
   constructor(private weatherService: WeatherService) {}
 
   ngOnInit(): void {
-    this.search.valueChanges
+    this.searchSubscription = this.search.valueChanges
       .pipe(
         debounceTime(500),
         distinctUntilChanged(),
@@ -33,13 +34,28 @@ export class WeatherSearchComponent implements OnInit {
   }
 
   selected(data: CitySuggestion) {
-    this.search.setValue(data.LocalizedName, { onlySelf: true, emitEvent: false });
-    this.showSuggestion = false;
-    this.isEditMode = false;
-    this.weatherService.getWeatherData(data.Key, data.LocalizedName).subscribe();
+    this.search.setValue(data.LocalizedName, {
+      onlySelf: true,
+      emitEvent: false,
+    });
+    this.clear();
+    this.weatherService
+      .getWeatherData(data.Key, data.LocalizedName)
+      .subscribe();
   }
 
   getCurrentGeoLocation() {
+    this.search.reset();
     this.weatherService.getCurrentGeoLocation();
+  }
+
+  clear() {
+    this.isEditMode = false;
+    this.list = [];
+    this.showSuggestion = false;
+  }
+
+  ngOnDestroy(): void {
+    this.searchSubscription.unsubscribe();
   }
 }
